@@ -12,7 +12,7 @@ object Task: IntIdTable("Tasks") {
     var name = varchar("name", 255)
     var description = varchar("description", 255).nullable()
     var status = varchar("status", 255)
-    var executionTime = long("executionTime").default(0)
+    var timeWorked = long("timeWorked").default(0)
     var dueDate = date("dueDate").nullable()
     var space = optReference("space", Space.id, onDelete = ReferenceOption.CASCADE)
     var createdAt = datetime("createdAt").defaultExpression(CurrentDateTime)
