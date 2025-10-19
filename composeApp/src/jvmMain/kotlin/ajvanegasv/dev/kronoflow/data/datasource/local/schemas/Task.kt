@@ -1,12 +1,10 @@
 package ajvanegasv.dev.kronoflow.data.datasource.local.schemas
 
-import kotlinx.datetime.LocalTime
 import org.jetbrains.exposed.v1.core.ReferenceOption
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.datetime.CurrentDateTime
 import org.jetbrains.exposed.v1.datetime.date
 import org.jetbrains.exposed.v1.datetime.datetime
-import org.jetbrains.exposed.v1.datetime.time
 
 object Task: IntIdTable("Tasks") {
     var name = varchar("name", 255)
