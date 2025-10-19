@@ -30,6 +30,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation("org.xerial:sqlite-jdbc:3.49.1.0")
         }
     }
 }

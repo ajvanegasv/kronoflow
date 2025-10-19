@@ -1,17 +1,31 @@
 package ajvanegasv.dev.kronoflow.data.datasource.local.database
 
+import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Space
+import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Task
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import java.io.File
 
 object AppDatabase {
     fun initialize() {
-        val dbPath = File(System.getProperty("user.home"), "kronoflow.db").absolutePath
+        val userHome = System.getProperty("user.home")
+        val kronoflowDir = File(userHome, ".kronoflow")
+
+        if (!kronoflowDir.exists()) {
+            kronoflowDir.mkdir()
+        }
+
+        val dbPath = File(kronoflowDir, "kronoflow.db").absolutePath
+
         Database.connect(
             url = "jdbc:sqlite:$dbPath",
             driver = "org.sqlite.JDBC"
         )
 
-        transaction {  }
+        transaction {
+            SchemaUtils.create(Space)
+            SchemaUtils.create(Task)
+        }
     }
 }
