@@ -33,7 +33,7 @@ fun Spaces() {
             modifier = Modifier.padding(bottom = 25.dp)
         )
         FlowRow {
-            SpaceCard("My Space", "18 tasks * Updated 2h ago")
+            SpaceCard("My Space", "Updated today")
         }
     }
 }
