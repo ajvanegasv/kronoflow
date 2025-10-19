@@ -6,13 +6,13 @@ import org.jetbrains.exposed.v1.datetime.CurrentDateTime
 import org.jetbrains.exposed.v1.datetime.date
 import org.jetbrains.exposed.v1.datetime.datetime
 
-object Task: IntIdTable("Tasks") {
+object Tasks: IntIdTable("Tasks") {
     var name = varchar("name", 255)
     var description = varchar("description", 255).nullable()
     var status = varchar("status", 255)
     var timeWorked = long("timeWorked").default(0)
     var dueDate = date("dueDate").nullable()
-    var space = optReference("space", Space.id, onDelete = ReferenceOption.CASCADE)
+    var space = optReference("space", Spaces.id, onDelete = ReferenceOption.CASCADE)
     var createdAt = datetime("createdAt").defaultExpression(CurrentDateTime)
     var updatedAt = datetime("updatedAt").defaultExpression(CurrentDateTime)
 }

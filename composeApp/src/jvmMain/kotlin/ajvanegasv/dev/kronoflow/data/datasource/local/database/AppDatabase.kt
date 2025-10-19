@@ -1,7 +1,7 @@
 package ajvanegasv.dev.kronoflow.data.datasource.local.database
 
-import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Space
-import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Task
+import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Spaces
+import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Tasks
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
@@ -24,8 +24,8 @@ object AppDatabase {
         )
 
         transaction {
-            SchemaUtils.create(Space)
-            SchemaUtils.create(Task)
+            SchemaUtils.create(Spaces)
+            SchemaUtils.create(Tasks)
         }
     }
 }
