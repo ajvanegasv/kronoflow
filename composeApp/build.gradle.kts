@@ -23,6 +23,7 @@ kotlin {
             implementation(libs.exposed.core)
             implementation(libs.exposed.jdbc)
             implementation(libs.h2)
+            implementation(libs.exposed.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
