@@ -5,6 +5,6 @@ import org.koin.core.context.startKoin
 
 fun initKoin(): KoinApplication {
     return startKoin {
-        modules(databaseModule)
+        modules(databaseModule, presentationModule)
     }
 }

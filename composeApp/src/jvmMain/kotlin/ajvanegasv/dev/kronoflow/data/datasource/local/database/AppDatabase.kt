@@ -2,8 +2,10 @@ package ajvanegasv.dev.kronoflow.data.datasource.local.database
 
 import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Spaces
 import ajvanegasv.dev.kronoflow.data.datasource.local.schemas.Tasks
+import ajvanegasv.dev.kronoflow.data.model.Space
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import java.io.File
 
@@ -26,6 +28,12 @@ object AppDatabase {
         transaction {
             SchemaUtils.create(Spaces)
             SchemaUtils.create(Tasks)
+
+            val hasAny = Spaces.selectAll().limit(1).toList().isNotEmpty()
+
+            if (!hasAny) {
+                Space.new { name = "My Space" }
+            }
         }
     }
 }

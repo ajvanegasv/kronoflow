@@ -29,6 +29,7 @@ kotlin {
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.kotlin.navigation)
+            implementation(libs.koin.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

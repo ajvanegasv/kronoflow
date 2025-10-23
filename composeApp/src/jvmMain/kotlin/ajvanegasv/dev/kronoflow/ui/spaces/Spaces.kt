@@ -1,5 +1,6 @@
 package ajvanegasv.dev.kronoflow.ui.spaces
 
+import ajvanegasv.dev.kronoflow.presentation.SpaceViewModel
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.spaces.components.SpaceCard
 import androidx.compose.foundation.layout.Arrangement
@@ -16,9 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Spaces() {
+    val vm = koinViewModel<SpaceViewModel>()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -54,7 +57,11 @@ fun Spaces() {
             }
         }
         FlowRow {
-            SpaceCard("My Space", "Updated today")
+            vm.getAll().forEach { space ->
+                SpaceCard(
+                    title = space.name,
+                )
+            }
         }
     }
 }
