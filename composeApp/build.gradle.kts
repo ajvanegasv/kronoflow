@@ -25,6 +25,10 @@ kotlin {
             implementation(libs.exposed.dao)
             implementation(libs.h2)
             implementation(libs.exposed.datetime)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.kotlin.navigation)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
