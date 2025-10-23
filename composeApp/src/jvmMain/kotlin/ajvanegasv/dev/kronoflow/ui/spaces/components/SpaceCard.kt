@@ -1,5 +1,7 @@
 package ajvanegasv.dev.kronoflow.ui.spaces.components
 
+import ajvanegasv.dev.kronoflow.ui.common.components.AccessButton
+import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicCard
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,6 +73,26 @@ fun SpaceCard(
                 StatusCard("Tasks:", "0")
                 StatusCard("Done:", "0")
                 StatusCard("Overdue:", "0")
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.End),
+                modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
+            ) {
+                BasicButton(
+                    onClick = {}
+                ) {
+                    Text(text = "Rename")
+                }
+                BasicButton(
+                    onClick = { }
+                ) {
+                    Text(text = "Delete")
+                }
+                AccessButton(
+                    onClick = { /* no-op */ },
+                ) {
+                    Text(text = "Open")
+                }
             }
         }
     }

@@ -5,8 +5,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 val KronoLightColors: ColorScheme = lightColorScheme(
-    primary = Color(0xFF2F6FED),
+    primary = Color(0XFF0B6EFD),
     onPrimary = Color.White,
+    inversePrimary = Color.Black,
     secondary = Color(0xFF5B6B80),
     onSecondary = Color.White,
     tertiary = Color(0xFF4FB3BF),
