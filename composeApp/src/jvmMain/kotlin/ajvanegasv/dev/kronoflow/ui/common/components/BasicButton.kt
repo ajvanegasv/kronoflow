@@ -7,11 +7,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun BasicButton(
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
     Button(
@@ -21,7 +23,8 @@ fun BasicButton(
             contentColor = MaterialTheme.colorScheme.inversePrimary,
         ),
         contentPadding = ButtonDefaults.ContentPadding,
-        elevation = ButtonDefaults.buttonElevation(6.dp)
+        elevation = ButtonDefaults.buttonElevation(6.dp),
+        modifier = modifier,
     ) {
         Row (
             verticalAlignment = Alignment.CenterVertically,

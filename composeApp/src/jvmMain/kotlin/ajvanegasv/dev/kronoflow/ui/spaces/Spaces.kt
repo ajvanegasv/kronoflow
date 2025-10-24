@@ -31,7 +31,7 @@ fun Spaces() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1.5f)
             ) {
                 Text(
                     text = "Manage Spaces",
@@ -47,7 +47,7 @@ fun Spaces() {
                 )
             }
             Column (
-                modifier = Modifier.weight(1f).padding(end = 30.dp, top = 20.dp),
+                modifier = Modifier.weight(0.5f).padding(end = 30.dp, top = 20.dp),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.Center,
             ) {

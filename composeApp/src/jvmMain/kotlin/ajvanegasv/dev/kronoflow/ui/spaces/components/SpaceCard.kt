@@ -1,8 +1,8 @@
 package ajvanegasv.dev.kronoflow.ui.spaces.components
 
 import ajvanegasv.dev.kronoflow.ui.common.components.AccessButton
-import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicCard
+import ajvanegasv.dev.kronoflow.ui.common.icons.Icons
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -78,19 +82,32 @@ fun SpaceCard(
                 horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.End),
                 modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
             ) {
-                BasicButton(
-                    onClick = {}
+                IconButton(
+                    onClick = {},
                 ) {
-                    Text(text = "Rename")
+                    Icon(
+                        imageVector = Icons.Edit,
+                        contentDescription = "Edit"
+                    )
                 }
-                BasicButton(
-                    onClick = { }
+                FilledIconButton(
+                    onClick = { },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = Color.Red,
+                    )
                 ) {
-                    Text(text = "Delete")
+                    Icon(
+                        imageVector = Icons.Delete,
+                        contentDescription = "Delete"
+                    )
                 }
                 AccessButton(
                     onClick = { /* no-op */ },
                 ) {
+                    Icon(
+                        imageVector = Icons.ArrowForward,
+                        contentDescription = "Arrow Forward"
+                    )
                     Text(text = "Open")
                 }
             }
