@@ -10,9 +10,7 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun App() {
     val navigator = rememberNavController()
-    Scaffold (
-        containerColor = MaterialTheme.colorScheme.background,
-    ) {
+    Scaffold {
         KronoTheme {
             Navigation(navigator)
         }

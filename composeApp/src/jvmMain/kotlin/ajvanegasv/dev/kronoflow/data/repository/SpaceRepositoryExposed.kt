@@ -46,7 +46,7 @@ class SpaceRepositoryExposed(
     override fun delete(id: EntityID<Int>): Boolean {
         try {
             spaceDao.delete(id)
-            return true;
+            return true
         } catch(_: Exception) {
             return false
         }
