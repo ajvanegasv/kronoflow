@@ -8,4 +8,5 @@ data class Space (
     val name: String,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
+    val lastViewed: LocalDateTime,
 )

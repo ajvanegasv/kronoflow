@@ -8,4 +8,5 @@ object Spaces : IntIdTable("Spaces") {
     val name = varchar("name", 255)
     val createdAt = datetime("createdAt").defaultExpression(CurrentDateTime)
     val updatedAt = datetime("updatedAt").defaultExpression(CurrentDateTime)
+    val lastViewed = datetime("lastViewed").defaultExpression(CurrentDateTime)
 }

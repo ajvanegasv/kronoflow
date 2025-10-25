@@ -11,4 +11,5 @@ class Space(id: EntityID<Int>): IntEntity(id) {
     var name by Spaces.name
     var createdAt by Spaces.createdAt
     var updatedAt by Spaces.updatedAt
+    var lastViewed by Spaces.lastViewed
 }

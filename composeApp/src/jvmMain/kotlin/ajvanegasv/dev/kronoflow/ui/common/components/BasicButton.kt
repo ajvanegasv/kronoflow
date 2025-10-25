@@ -19,8 +19,7 @@ fun BasicButton(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.onPrimary,
-            contentColor = MaterialTheme.colorScheme.inversePrimary,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
         contentPadding = ButtonDefaults.ContentPadding,
         elevation = ButtonDefaults.buttonElevation(6.dp),
