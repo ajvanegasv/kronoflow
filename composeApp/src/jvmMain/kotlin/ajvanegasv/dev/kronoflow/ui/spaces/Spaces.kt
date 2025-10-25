@@ -3,7 +3,6 @@ package ajvanegasv.dev.kronoflow.ui.spaces
 import ajvanegasv.dev.kronoflow.presentation.SpaceViewModel
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.common.theme.extendedColors
-import ajvanegasv.dev.kronoflow.ui.spaces.components.CreateSpaceDialog
 import ajvanegasv.dev.kronoflow.ui.spaces.components.SpaceCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,8 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -29,7 +26,6 @@ import org.koin.compose.viewmodel.koinViewModel
 fun Spaces() {
     val vm = koinViewModel<SpaceViewModel>()
     val spaceState by vm.spacesState.collectAsState()
-    val openSpaceCreateDialog = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -60,24 +56,20 @@ fun Spaces() {
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.Center,
             ) {
-                BasicButton(onClick = { openSpaceCreateDialog.value = true }) {
+                BasicButton(onClick = { vm.create() }) {
                     Text(text = "Create Space")
                 }
             }
         }
-        FlowRow {
+        FlowRow (
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+        ) {
             spaceState.forEach { space ->
                 SpaceCard(
                     data = space,
-                    onSaveButton = { id, name -> vm.rename(id, name) }
-                )
-            }
-        }
-
-        when {
-            openSpaceCreateDialog.value -> {
-                CreateSpaceDialog(
-                    onDismissRequest = { openSpaceCreateDialog.value = false }
+                    onSaveButton = { id, name -> vm.rename(id, name) },
+                    onDeleteButton = { id -> vm.delete(id) },
                 )
             }
         }

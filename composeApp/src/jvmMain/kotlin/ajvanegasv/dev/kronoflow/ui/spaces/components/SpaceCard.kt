@@ -86,7 +86,10 @@ private fun StatusCard(title: String, value: String) {
 }
 
 @Composable
-private fun PrincipalButtons(isRename: MutableState<Boolean>) {
+private fun PrincipalButtons(
+    isRename: MutableState<Boolean>,
+    onDeleteButton: () -> Unit,
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         modifier = Modifier.padding(top = 10.dp)
@@ -102,7 +105,7 @@ private fun PrincipalButtons(isRename: MutableState<Boolean>) {
             Text(text = "Rename")
         }
         BasicButton(
-            onClick = { },
+            onClick = onDeleteButton,
         ) {
             Icon(
                 imageVector = Icons.Delete,
@@ -198,7 +201,8 @@ private fun TitleSpace(
 @Composable
 fun SpaceCard(
     data: Space,
-    onSaveButton: (id: EntityID<Int>, name: String) -> Unit
+    onSaveButton: (id: EntityID<Int>, name: String) -> Unit,
+    onDeleteButton: (id: EntityID<Int>) -> Unit,
 ) {
     val isRename = remember { mutableStateOf(false) }
     val space = remember { mutableStateOf(data) }
@@ -248,7 +252,10 @@ fun SpaceCard(
                     )
                 }
                 false -> {
-                    PrincipalButtons(isRename)
+                    PrincipalButtons(
+                        isRename,
+                        onDeleteButton = { onDeleteButton(space.value.id) },
+                    )
                 }
             }
         }

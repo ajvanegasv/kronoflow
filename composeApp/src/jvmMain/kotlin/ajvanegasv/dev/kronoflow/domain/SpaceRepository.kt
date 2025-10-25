@@ -7,6 +7,6 @@ interface SpaceRepository {
     fun create(name: String): Space?
     fun getAll(): List<Space>
     fun getById(id: EntityID<Int>): Space?
-    fun delete(id: EntityID<Int>)
+    fun delete(id: EntityID<Int>): Boolean
     fun rename(id: EntityID<Int>, name: String): Space?
 }

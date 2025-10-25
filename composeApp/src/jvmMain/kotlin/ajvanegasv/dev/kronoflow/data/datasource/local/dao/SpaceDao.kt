@@ -9,10 +9,16 @@ import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 class SpaceDao {
-    fun create(name: String): Space {
+    fun create(spaceName: String): Space {
         return transaction {
             Space.new {
-                this.name = name
+                name = spaceName
+            }.apply {
+                id.value
+                name
+                createdAt
+                updatedAt
+                lastViewed
             }
         }
     }

@@ -33,4 +33,14 @@ class SpaceViewModel(
         val spaceRenamed = spaceRepository.rename(id, name) ?: return
         replaceSpaceInState(spaceRenamed)
     }
+
+    fun create() {
+        val space = spaceRepository.create("My new space") ?: return
+        _spacesState.value += space
+    }
+
+    fun delete(id: EntityID<Int>) {
+        val isDelete = spaceRepository.delete(id)
+        if (isDelete) _spacesState.value = _spacesState.value.filter { it.id != id }
+    }
 }
