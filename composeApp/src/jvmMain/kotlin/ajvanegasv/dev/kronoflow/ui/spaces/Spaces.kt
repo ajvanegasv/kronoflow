@@ -40,7 +40,7 @@ fun Spaces() {
             .padding(horizontal = 15.dp)
     ) {
         LazyVerticalGrid (
-            columns = GridCells.Adaptive(minSize = 300.dp),
+            columns = GridCells.Adaptive(minSize = 360.dp),
             horizontalArrangement = Arrangement.spacedBy(15.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp),
             modifier = Modifier.fillMaxSize(),

@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 
+private enum class State { Edit, Delete, Wait }
+
 @Composable
 private fun StatusCard(title: String, value: String) {
     val borderShape = RoundedCornerShape(10.dp)
@@ -86,16 +88,41 @@ private fun StatusCard(title: String, value: String) {
 }
 
 @Composable
-private fun PrincipalButtons(
-    isRename: MutableState<Boolean>,
-    onDeleteButton: () -> Unit,
+private fun DeleteButtons(
+    state: MutableState<State>,
+    modifier: Modifier = Modifier,
+    onDeleteButton: () -> Unit
 ) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        modifier = modifier
+    ) {
+        BasicButton(
+            onClick = {
+                onDeleteButton()
+                state.value = State.Wait
+            } ,
+        ) {
+            Text(text = "Delete")
+        }
+        AccessButton(
+            onClick = {
+                state.value = State.Wait
+            } ,
+        ) {
+            Text(text = "Cancel")
+        }
+    }
+}
+
+@Composable
+private fun PrincipalButtons(state: MutableState<State>) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         modifier = Modifier.padding(top = 10.dp)
     ) {
         BasicButton(
-            onClick = { isRename.value = true },
+            onClick = { state.value = State.Edit },
         ) {
             Icon(
                 imageVector = Icons.Edit,
@@ -105,7 +132,7 @@ private fun PrincipalButtons(
             Text(text = "Rename")
         }
         BasicButton(
-            onClick = onDeleteButton,
+            onClick = { state.value = State.Delete },
         ) {
             Icon(
                 imageVector = Icons.Delete,
@@ -129,7 +156,7 @@ private fun PrincipalButtons(
 
 @Composable
 private fun RenameButtons(
-    isRename: MutableState<Boolean>,
+    state: MutableState<State>,
     modifier: Modifier = Modifier,
     onSaveButton: () -> Unit = {},
 ) {
@@ -140,13 +167,13 @@ private fun RenameButtons(
         AccessButton(
             onClick = {
                 onSaveButton()
-                isRename.value = false
+                state.value = State.Wait
             } ,
         ) {
             Text(text = "Save")
         }
         BasicButton(
-            onClick = { isRename.value = false },
+            onClick = { state.value = State.Wait },
         ) {
             Text(text = "Cancel")
         }
@@ -156,11 +183,11 @@ private fun RenameButtons(
 @Composable
 private fun TitleSpace(
     title: String,
-    isRename: MutableState<Boolean>,
+    state: MutableState<State>,
     onValueChange: (String) -> Unit = {},
 ) {
-    when (isRename.value) {
-        true -> {
+    when (state.value) {
+        State.Edit -> {
             val focusRequester = remember { FocusRequester() }
             val textFieldValue by remember(title) {
                 mutableStateOf(
@@ -187,7 +214,7 @@ private fun TitleSpace(
                     .padding(start = 5.dp)
             )
         }
-        false -> {
+        State.Wait, State.Delete -> {
             Text(
                 text = title,
                 fontWeight = FontWeight.SemiBold,
@@ -204,11 +231,11 @@ fun SpaceCard(
     onSaveButton: (id: EntityID<Int>, name: String) -> Unit,
     onDeleteButton: (id: EntityID<Int>) -> Unit,
 ) {
-    val isRename = remember { mutableStateOf(false) }
+    val state = remember{ mutableStateOf(State.Wait) }
     val space = remember { mutableStateOf(data) }
 
-    LaunchedEffect(isRename.value) {
-        if (!isRename.value) {
+    LaunchedEffect(state.value) {
+        if (state.value == State.Wait) {
             space.value = data
         }
     }
@@ -219,7 +246,7 @@ fun SpaceCard(
         ) {
             TitleSpace(
                 title = space.value.name,
-                isRename = isRename,
+                state = state,
                 onValueChange = { space.value = space.value.copy(name = it) }
             )
             Text(
@@ -241,21 +268,27 @@ fun SpaceCard(
                 StatusCard("Done:", "0")
                 StatusCard("Overdue:", "0")
             }
-            when (isRename.value) {
-                true -> {
+            when (state.value) {
+                State.Edit -> {
                     RenameButtons(
-                        isRename,
+                        state,
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(top = 10.dp),
                         onSaveButton = { onSaveButton(space.value.id, space.value.name) },
                     )
                 }
-                false -> {
-                    PrincipalButtons(
-                        isRename,
+                State.Delete -> {
+                    DeleteButtons(
+                        state,
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(top = 10.dp),
                         onDeleteButton = { onDeleteButton(space.value.id) },
                     )
+                }
+                State.Wait -> {
+                    PrincipalButtons(state)
                 }
             }
         }
