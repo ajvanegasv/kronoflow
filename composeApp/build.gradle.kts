@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -30,6 +31,8 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.kotlin.navigation)
             implementation(libs.koin.viewmodel)
+            implementation(libs.kotlin.serialization.json)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

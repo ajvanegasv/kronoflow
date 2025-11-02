@@ -1,5 +1,6 @@
 package ajvanegasv.dev.kronoflow.ui.spaces
 
+import ajvanegasv.dev.kronoflow.navigation.SpaceRoute
 import ajvanegasv.dev.kronoflow.presentation.SpaceViewModel
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.common.theme.extendedColors
@@ -26,10 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun Spaces() {
+fun SpacesScreen(navigator: NavHostController) {
     val vm = koinViewModel<SpaceViewModel>()
     val spaceState by vm.spacesState.collectAsState()
 
@@ -82,6 +84,7 @@ fun Spaces() {
                     data = space,
                     onSaveButton = { id, name -> vm.rename(id, name) },
                     onDeleteButton = { id -> vm.delete(id) },
+                    onOpenSpace = { id -> navigator.navigate(route = SpaceRoute(id = id.value)) }
                 )
             }
         }

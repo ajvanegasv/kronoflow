@@ -116,7 +116,10 @@ private fun DeleteButtons(
 }
 
 @Composable
-private fun PrincipalButtons(state: MutableState<State>) {
+private fun PrincipalButtons(
+    state: MutableState<State>,
+    onOpenSpace: () -> Unit = {},
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         modifier = Modifier.padding(top = 10.dp)
@@ -142,7 +145,7 @@ private fun PrincipalButtons(state: MutableState<State>) {
             Text(text = "Delete")
         }
         AccessButton(
-            onClick = { /* no-op */ },
+            onClick = onOpenSpace,
         ) {
             Icon(
                 imageVector = Icons.ArrowForward,
@@ -230,6 +233,7 @@ fun SpaceCard(
     data: Space,
     onSaveButton: (id: EntityID<Int>, name: String) -> Unit,
     onDeleteButton: (id: EntityID<Int>) -> Unit,
+    onOpenSpace: (id: EntityID<Int>) -> Unit,
 ) {
     val state = remember{ mutableStateOf(State.Wait) }
     val space = remember { mutableStateOf(data) }
@@ -288,7 +292,7 @@ fun SpaceCard(
                     )
                 }
                 State.Wait -> {
-                    PrincipalButtons(state)
+                    PrincipalButtons(state, { onOpenSpace(space.value.id) })
                 }
             }
         }
