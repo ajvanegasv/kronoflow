@@ -1,6 +1,6 @@
 package ajvanegasv.dev.kronoflow.ui.spaces.components
 
-import ajvanegasv.dev.kronoflow.domain.model.Space
+import ajvanegasv.dev.kronoflow.presentation.space.SpaceUiState
 import ajvanegasv.dev.kronoflow.ui.common.components.AccessButton
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicCard
@@ -121,8 +121,8 @@ private fun PrincipalButtons(
     onOpenSpace: () -> Unit = {},
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
-        modifier = Modifier.padding(top = 10.dp)
+        horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+        modifier = Modifier.padding(top = 10.dp).fillMaxWidth()
     ) {
         BasicButton(
             onClick = { state.value = State.Edit },
@@ -230,17 +230,17 @@ private fun TitleSpace(
 
 @Composable
 fun SpaceCard(
-    data: Space,
+    data: SpaceUiState,
     onSaveButton: (id: EntityID<Int>, name: String) -> Unit,
     onDeleteButton: (id: EntityID<Int>) -> Unit,
     onOpenSpace: (id: EntityID<Int>) -> Unit,
 ) {
     val state = remember{ mutableStateOf(State.Wait) }
-    val space = remember { mutableStateOf(data) }
+    val spaceUiState = remember { mutableStateOf(data) }
 
     LaunchedEffect(state.value) {
         if (state.value == State.Wait) {
-            space.value = data
+            spaceUiState.value = data
         }
     }
 
@@ -249,12 +249,14 @@ fun SpaceCard(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp)
         ) {
             TitleSpace(
-                title = space.value.name,
+                title = spaceUiState.value.space.name,
                 state = state,
-                onValueChange = { space.value = space.value.copy(name = it) }
+                onValueChange = { spaceUiState.value = spaceUiState.value.copy(
+                    space = spaceUiState.value.space.copy(name = it)
+                )}
             )
             Text(
-                text = "Viewed " + getRelativeTime(space.value.lastViewed),
+                text = "Viewed " + getRelativeTime(spaceUiState.value.space.lastViewed),
                 fontSize = 14.sp,
                 color = MaterialTheme.extendedColors.textSecondary,
                 fontWeight = FontWeight.W500,
@@ -265,12 +267,13 @@ fun SpaceCard(
                 ),
             )
             Row (
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
-                StatusCard("Tasks:", "0")
-                StatusCard("Done:", "0")
-                StatusCard("Overdue:", "0")
+                StatusCard("Tasks:", spaceUiState.value.totalTasks.toString())
+                StatusCard("Done:", spaceUiState.value.completedTasks.toString())
+                StatusCard("Overdue:", spaceUiState.value.overdueTasks.toString())
             }
             when (state.value) {
                 State.Edit -> {
@@ -279,7 +282,7 @@ fun SpaceCard(
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(top = 10.dp),
-                        onSaveButton = { onSaveButton(space.value.id, space.value.name) },
+                        onSaveButton = { onSaveButton(spaceUiState.value.space.id, spaceUiState.value.space.name) },
                     )
                 }
                 State.Delete -> {
@@ -288,11 +291,11 @@ fun SpaceCard(
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(top = 10.dp),
-                        onDeleteButton = { onDeleteButton(space.value.id) },
+                        onDeleteButton = { onDeleteButton(spaceUiState.value.space.id) },
                     )
                 }
                 State.Wait -> {
-                    PrincipalButtons(state, { onOpenSpace(space.value.id) })
+                    PrincipalButtons(state) { onOpenSpace(spaceUiState.value.space.id) }
                 }
             }
         }

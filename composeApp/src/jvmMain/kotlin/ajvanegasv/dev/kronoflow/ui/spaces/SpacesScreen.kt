@@ -1,7 +1,7 @@
 package ajvanegasv.dev.kronoflow.ui.spaces
 
 import ajvanegasv.dev.kronoflow.navigation.SpaceRoute
-import ajvanegasv.dev.kronoflow.presentation.SpaceViewModel
+import ajvanegasv.dev.kronoflow.presentation.space.SpaceViewModel
 import ajvanegasv.dev.kronoflow.ui.common.components.BasicButton
 import ajvanegasv.dev.kronoflow.ui.common.theme.extendedColors
 import ajvanegasv.dev.kronoflow.ui.spaces.components.SpaceCard
@@ -33,7 +33,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun SpacesScreen(navigator: NavHostController) {
     val vm = koinViewModel<SpaceViewModel>()
-    val spaceState by vm.spacesState.collectAsState()
+    val spacesUiState by vm.spacesState.collectAsState()
 
     Box(
         modifier = Modifier
@@ -78,8 +78,8 @@ fun SpacesScreen(navigator: NavHostController) {
                     }
                 }
             }
-            items(spaceState.size) { index ->
-                val space = spaceState[index]
+            items(spacesUiState.spaces.size) { index ->
+                val space = spacesUiState.spaces[index]
                 SpaceCard(
                     data = space,
                     onSaveButton = { id, name -> vm.rename(id, name) },
